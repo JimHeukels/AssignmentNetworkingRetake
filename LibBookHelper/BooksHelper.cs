@@ -105,17 +105,20 @@ namespace BookHelperSolution
         /// </summary>
         protected override void createSocket()
         {
-            //todo: To meet the assignment requirement, implement this method
-            // try
-            // {
-
-
-            // }
-            // catch (Exception e)
-            // {
-
-            // }
-
+            try
+            {
+                ipAddress = IPAddress.Parse(settings.BookHelperIPAddress);
+                listeningPoint = new IPEndPoint(ipAddress, settings.BookHelperPortNumber);
+                Socket NotAcceptedServerSocket = new Socket(AddressFamily.InterNetwork,
+                                    SocketType.Stream, ProtocolType.Tcp);
+                NotAcceptedServerSocket.Bind(listeningPoint);
+                NotAcceptedServerSocket.Listen(settings.ServerListeningQueue);
+                listener = NotAcceptedServerSocket.Accept();
+            }
+            catch
+            {
+                Console.WriteLine("Error in setting up Bookhelper");
+            }
         }
 
         /// <summary>
