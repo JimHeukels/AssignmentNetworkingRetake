@@ -99,14 +99,20 @@ namespace LibServerSolution
             // Extra Note: If failed to connect to helper. Server should retry 3 times.
             // After the 3d attempt the server starts anyway and listen to incoming messages to clients
            
-            // try
-            // {
-                 
-            // }
-            // catch ()
-            // {
-
-            // }
+            try
+            {
+                IPAddress iPAddress = IPAddress.Parse(settings.ServerIPAddress);
+                listeningPoint = new IPEndPoint(iPAddress, settings.ServerPortNumber);
+                serverSocket = new Socket(AddressFamily.InterNetwork,
+                                    SocketType.Stream, ProtocolType.Tcp);
+                serverSocket.Bind(listeningPoint);
+                serverSocket.Listen(settings.ServerListeningQueue);
+                Socket acceptedServerSocket = serverSocket.Accept();
+            }
+            catch
+            {
+                Console.WriteLine("Error in setting up server");
+            }
 
         }
 

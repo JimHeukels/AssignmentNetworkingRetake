@@ -130,14 +130,16 @@ namespace LibClient
         {
              //todo: To meet the assignment requirement, finish the implementation of this method.
   
-            // try
-            // {
-              
-            // }
-            // catch ()
-            // {
-             
-            // }
+            try
+            {
+                clientSocket = new Socket(AddressFamily.InterNetwork,
+                                     SocketType.Stream, ProtocolType.Tcp);
+                clientSocket.Connect(serverEndPoint);
+            }
+            catch 
+            {
+                Console.WriteLine("Error in setting up server");
+            }
 
         }
 
