@@ -202,7 +202,7 @@ namespace LibClient
             try
             {
                if (message.Type == MessageType.Welcome){
-                    Message processedMsgResult = new Message();
+                    processedMsgResult = new Message();
                     processedMsgResult.Type = MessageType.BookInquiry;
                     processedMsgResult.Content = bookName;
                }
