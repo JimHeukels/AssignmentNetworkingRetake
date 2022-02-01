@@ -172,6 +172,12 @@ namespace LibClient
                 clientSocket.Send(msg);
 
                 int buf = clientSocket.Receive(buffer);
+                string data = Encoding.ASCII.GetString(buffer, 0, buf);
+                Message ClientRecieved = JsonSerializer.Deserialize<Message>(data);
+                
+                jsonString = JsonSerializer.Serialize(processMessage(ClientRecieved));
+                msg = Encoding.ASCII.GetBytes(jsonString);
+                clientSocket.Send(msg);
                
             }
             catch 
@@ -193,11 +199,18 @@ namespace LibClient
         {
             Message processedMsgResult = new Message();
             //todo: To meet the assignment requirement, finish the implementation of this method.
-            // try
-            // {
-               
-            // }
-            // catch () {  }
+            try
+            {
+               if (message.Type == MessageType.Welcome){
+                    Message processedMsgResult = new Message();
+                    processedMsgResult.Type = MessageType.BookInquiry;
+                    processedMsgResult.Content = bookName;
+               }
+            }
+            catch  
+            {  
+
+            }
 
             return processedMsgResult;
         }
