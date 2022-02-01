@@ -108,6 +108,23 @@ namespace LibServerSolution
                                     SocketType.Stream, ProtocolType.Tcp);
                 notAcceptedserverSocket.Bind(listeningPoint);
                 notAcceptedserverSocket.Listen(settings.ServerListeningQueue);
+
+                IPAddress ipAddress = IPAddress.Parse(settings.BookHelperIPAddress);
+                IPEndPoint serverEndPoint = new IPEndPoint(ipAddress, settings.BookHelperPortNumber);
+                bookHelperSocket = new Socket(AddressFamily.InterNetwork,
+                                     SocketType.Stream, ProtocolType.Tcp);
+                
+                try{
+                bookHelperSocket.Connect(serverEndPoint);
+                }
+                catch
+                {
+                    for (int x = 1; x <= 3; x++){
+                        delay();
+                        bookHelperSocket.Connect(serverEndPoint);
+                    }
+                }
+
                 Socket serverSocket = notAcceptedserverSocket.Accept();
             }
             catch
