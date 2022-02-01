@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text.Json;
+using System.Text;
 using System.Net;
 using System.Net.Sockets;
 using System.IO;
@@ -126,13 +127,20 @@ namespace LibServerSolution
             createSocketAndConnectHelpers();
             //todo: To meet the assignment requirement, finish the implementation of this method.
 
+            try
+            {
+                int b = newSock.Receive(buffer);
+                data = Encoding.ASCII.GetString(buffer, 0, b);
+                Message ClientRecieved = JsonSerializer.Deserialize<Message>(data);
 
-            // try
-            // {
-            // }
-            // catch (Exception e) {
+                string jsonString = JsonSerializer.Serialize(processMessage(ClientRecieved));
+                byte[] msg = Encoding.ASCII.GetBytes(jsonString);
+                newSock.Send(msg);
+            }
 
-            // }
+            catch (Exception e) {
+                Console.WriteLine("Something went wrong.");
+            }
            
         }
 
@@ -145,12 +153,15 @@ namespace LibServerSolution
         {
             Message pmReply = new Message();
             
-            //todo: To meet the assignment requirement, finish the implementation of this method .
-           
+            if (Message.Type == MessageType.Hello){
+                pmReply.Type = MessageType.Welcome;
+                pmReply.Content = "Welcome";
 
+            }
 
 
             return pmReply;
+            
         }
 
         /// <summary>
