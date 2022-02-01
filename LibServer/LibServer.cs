@@ -104,11 +104,11 @@ namespace LibServerSolution
             {
                 IPAddress iPAddress = IPAddress.Parse(settings.ServerIPAddress);
                 listeningPoint = new IPEndPoint(iPAddress, settings.ServerPortNumber);
-                serverSocket = new Socket(AddressFamily.InterNetwork,
+                Socket notAcceptedserverSocket = new Socket(AddressFamily.InterNetwork,
                                     SocketType.Stream, ProtocolType.Tcp);
-                serverSocket.Bind(listeningPoint);
-                serverSocket.Listen(settings.ServerListeningQueue);
-                Socket acceptedServerSocket = serverSocket.Accept();
+                notAcceptedserverSocket.Bind(listeningPoint);
+                notAcceptedserverSocket.Listen(settings.ServerListeningQueue);
+                Socket serverSocket = notAcceptedserverSocket.Accept();
             }
             catch
             {
@@ -129,13 +129,14 @@ namespace LibServerSolution
 
             try
             {
-                int b = newSock.Receive(buffer);
-                data = Encoding.ASCII.GetString(buffer, 0, b);
+                byte[] buffer = new byte[1000];
+                int b = serverSocket.Receive(buffer);
+                string data = Encoding.ASCII.GetString(buffer, 0, b);
                 Message ClientRecieved = JsonSerializer.Deserialize<Message>(data);
 
                 string jsonString = JsonSerializer.Serialize(processMessage(ClientRecieved));
                 byte[] msg = Encoding.ASCII.GetBytes(jsonString);
-                newSock.Send(msg);
+                serverSocket.Send(msg);
             }
 
             catch (Exception e) {
@@ -153,10 +154,9 @@ namespace LibServerSolution
         {
             Message pmReply = new Message();
             
-            if (Message.Type == MessageType.Hello){
+            if (message.Type == MessageType.Hello){
                 pmReply.Type = MessageType.Welcome;
                 pmReply.Content = "Welcome";
-
             }
 
 
