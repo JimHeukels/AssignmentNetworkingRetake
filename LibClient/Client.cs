@@ -4,6 +4,7 @@ using System.IO;
 using System.Net.Sockets;
 using System.Net;
 using System.Text.Json;
+using System.Text;
 using System.Threading;
 // using LibData;
 using Microsoft.Extensions.Configuration;
@@ -132,6 +133,8 @@ namespace LibClient
   
             try
             {
+                ipAddress = IPAddress.Parse(settings.ServerIPAddress);
+                serverEndPoint = new IPEndPoint(ipAddress, settings.ServerPortNumber);
                 clientSocket = new Socket(AddressFamily.InterNetwork,
                                      SocketType.Stream, ProtocolType.Tcp);
                 clientSocket.Connect(serverEndPoint);
@@ -154,12 +157,27 @@ namespace LibClient
             createSocketAndConnect();
 
             //todo: To meet the assignment requirement, finish the implementation of this method.
-            // try
-            // {
+            try
+            {
+                int maxBuffSize = 1000;
+                byte[] buffer = new byte[maxBuffSize];
+                byte[] msg = new byte[maxBuffSize];
+
+                Message helloMessage = new Message();
+                helloMessage.Type = MessageType.Hello;
+                helloMessage.Content = client_id;
+                string jsonString = JsonSerializer.Serialize(helloMessage);
+
+                msg = Encoding.ASCII.GetBytes(jsonString);
+                clientSocket.Send(msg);
+
+                int buf = clientSocket.Receive(buffer);
                
-               
-            // }
-            // catch () {  }
+            }
+            catch 
+            {  
+
+            }
 
             return this.result;
         }
