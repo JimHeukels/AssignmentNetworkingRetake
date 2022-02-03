@@ -123,6 +123,7 @@ namespace LibServerSolution
                         delay();
                         try{
                         bookHelperSocket.Connect(serverEndPoint);
+                        break;
                         }
                         catch{}
                     }
