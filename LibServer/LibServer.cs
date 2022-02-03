@@ -150,13 +150,17 @@ namespace LibServerSolution
             try
             {
                 byte[] buffer = new byte[1000];
-                int b = serverSocket.Receive(buffer);
-                string data = Encoding.ASCII.GetString(buffer, 0, b);
-                Message ClientRecieved = JsonSerializer.Deserialize<Message>(data);
+                void waitForReceive(){
+                    int b = serverSocket.Receive(buffer);
+                    string data = Encoding.ASCII.GetString(buffer, 0, b);
+                    Message ClientRecieved = JsonSerializer.Deserialize<Message>(data);
 
-                string jsonString = JsonSerializer.Serialize(processMessage(ClientRecieved));
-                byte[] msg = Encoding.ASCII.GetBytes(jsonString);
-                serverSocket.Send(msg);
+                    string jsonString = JsonSerializer.Serialize(processMessage(ClientRecieved));
+                    byte[] msg = Encoding.ASCII.GetBytes(jsonString);
+                    serverSocket.Send(msg);
+                    waitForReceive();
+                }
+                waitForReceive();
             }
 
             catch {
@@ -179,6 +183,10 @@ namespace LibServerSolution
                 pmReply.Content = "Welcome";
             }
 
+            else if (message.Type == MessageType.BookInquiry){
+                pmReply = requestDataFromHelpers(message.Content);
+            }
+
 
             return pmReply;
             
@@ -194,12 +202,26 @@ namespace LibServerSolution
             Message HelperReply = new Message();
             //todo: To meet the assignment requirement, finish the implementation of this method .
 
-            // try
-            // {
+            try
+            {
+                Message messageToHelper = new Message();
+                messageToHelper.Type = MessageType.BookInquiry;
+                messageToHelper.Content = content;
 
-               
-            // }
-            // catch () { }
+                string jsonString = JsonSerializer.Serialize(messageToHelper);
+                byte[] msg = Encoding.ASCII.GetBytes(jsonString);
+                bookHelperSocket.Send(msg);
+
+                byte[] buffer = new byte[1000];
+                int b = bookHelperSocket.Receive(buffer);
+                string data = Encoding.ASCII.GetString(buffer, 0, b);
+                Message helperReceived = JsonSerializer.Deserialize<Message>(data);
+                HelperReply = helperReceived;
+                
+            }
+            catch { 
+                Console.WriteLine("Error in sending message to helper.");
+            }
 
             return HelperReply;
 
