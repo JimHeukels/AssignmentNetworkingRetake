@@ -127,7 +127,7 @@ namespace LibServerSolution
                         catch{}
                     }
                 }
-                Socket serverSocket = notAcceptedserverSocket.Accept();
+                serverSocket = notAcceptedserverSocket.Accept();
             }
             catch
             {
@@ -148,10 +148,8 @@ namespace LibServerSolution
 
             try
             {
-                byte[] buffer = new byte[10000];
-                Console.WriteLine("before receive");
+                byte[] buffer = new byte[1000];
                 int b = serverSocket.Receive(buffer);
-                Console.WriteLine("after receive");
                 string data = Encoding.ASCII.GetString(buffer, 0, b);
                 Message ClientRecieved = JsonSerializer.Deserialize<Message>(data);
 
