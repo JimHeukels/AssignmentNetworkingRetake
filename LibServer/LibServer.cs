@@ -121,10 +121,12 @@ namespace LibServerSolution
                 {
                     for (int x = 1; x <= 3; x++){
                         delay();
+                        try{
                         bookHelperSocket.Connect(serverEndPoint);
+                        }
+                        catch{}
                     }
                 }
-
                 Socket serverSocket = notAcceptedserverSocket.Accept();
             }
             catch
@@ -146,8 +148,10 @@ namespace LibServerSolution
 
             try
             {
-                byte[] buffer = new byte[1000];
+                byte[] buffer = new byte[10000];
+                Console.WriteLine("before receive");
                 int b = serverSocket.Receive(buffer);
+                Console.WriteLine("after receive");
                 string data = Encoding.ASCII.GetString(buffer, 0, b);
                 Message ClientRecieved = JsonSerializer.Deserialize<Message>(data);
 
@@ -156,7 +160,7 @@ namespace LibServerSolution
                 serverSocket.Send(msg);
             }
 
-            catch (Exception e) {
+            catch {
                 Console.WriteLine("Something went wrong.");
             }
            
