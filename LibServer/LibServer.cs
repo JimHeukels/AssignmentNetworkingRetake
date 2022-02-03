@@ -106,6 +106,7 @@ namespace LibServerSolution
                 listeningPoint = new IPEndPoint(iPAddress, settings.ServerPortNumber);
                 Socket notAcceptedserverSocket = new Socket(AddressFamily.InterNetwork,
                                     SocketType.Stream, ProtocolType.Tcp);
+                notAcceptedserverSocket.SetSocketOption(SocketOptionLevel.Socket,SocketOptionName.ReuseAddress, true);
                 notAcceptedserverSocket.Bind(listeningPoint);
                 notAcceptedserverSocket.Listen(settings.ServerListeningQueue);
 
@@ -129,6 +130,7 @@ namespace LibServerSolution
                     }
                 }
                 serverSocket = notAcceptedserverSocket.Accept();
+                serverSocket.SetSocketOption(SocketOptionLevel.Socket,SocketOptionName.ReuseAddress, true);
             }
             catch
             {
@@ -146,27 +148,50 @@ namespace LibServerSolution
         {
             createSocketAndConnectHelpers();
             //todo: To meet the assignment requirement, finish the implementation of this method.
+            void newClient(){
+                try
+                {
+                    byte[] buffer = new byte[1000];
+                    void waitForReceive(){
+                        int b = serverSocket.Receive(buffer);
+                        string data = Encoding.ASCII.GetString(buffer, 0, b);
+                        Message ClientRecieved = JsonSerializer.Deserialize<Message>(data);
 
-            try
-            {
-                byte[] buffer = new byte[1000];
-                void waitForReceive(){
-                    int b = serverSocket.Receive(buffer);
-                    string data = Encoding.ASCII.GetString(buffer, 0, b);
-                    Message ClientRecieved = JsonSerializer.Deserialize<Message>(data);
-
-                    string jsonString = JsonSerializer.Serialize(processMessage(ClientRecieved));
-                    byte[] msg = Encoding.ASCII.GetBytes(jsonString);
-                    serverSocket.Send(msg);
+                        string jsonString = JsonSerializer.Serialize(processMessage(ClientRecieved));
+                        byte[] msg = Encoding.ASCII.GetBytes(jsonString);
+                        serverSocket.Send(msg);
+                        waitForReceive();
+                    }
                     waitForReceive();
                 }
-                waitForReceive();
-            }
 
-            catch {
-                Console.WriteLine("Something went wrong.");
+                catch {
+                    if (serverSocket.Connected){
+                        Console.WriteLine("Error in sending/receiving.");
+                    }
+                    else{
+                        Console.WriteLine("client disconnected");
+                        serverSocket.Shutdown(SocketShutdown.Both);
+                        serverSocket.Disconnect(true);
+                        serverSocket.Close();
+                        serverSocket.Dispose();
+                        IPAddress iPAddress = IPAddress.Parse(settings.ServerIPAddress);
+                        listeningPoint = new IPEndPoint(iPAddress, settings.ServerPortNumber);
+                        Socket notAcceptedserverSocket = new Socket(AddressFamily.InterNetwork,
+                                            SocketType.Stream, ProtocolType.Tcp);
+                        notAcceptedserverSocket.SetSocketOption(SocketOptionLevel.Socket,SocketOptionName.ReuseAddress, true);
+                        notAcceptedserverSocket.Bind(listeningPoint);
+                        notAcceptedserverSocket.Listen(settings.ServerListeningQueue);
+                        Console.WriteLine("waiting for accept");
+                        serverSocket = null;
+                        serverSocket = notAcceptedserverSocket.Accept();
+                        Console.WriteLine("opnieuw");
+                        
+                        newClient();
+                    }
+                }
             }
-           
+            newClient();
         }
 
         /// <summary>
@@ -229,7 +254,7 @@ namespace LibServerSolution
 
         public void delay()
         {
-            int m = 10;
+            int m = 3;
             for (int i = 0; i <= m; i++)
             {
                 Console.Out.Write("{0} .. ", i);
