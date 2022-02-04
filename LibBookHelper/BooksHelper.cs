@@ -113,7 +113,7 @@ namespace BookHelperSolution
             {
                 ipAddress = IPAddress.Parse(settings.BookHelperIPAddress);
                 listeningPoint = new IPEndPoint(ipAddress, settings.BookHelperPortNumber);
-                Socket NotAcceptedServerSocket = new Socket(AddressFamily.InterNetwork,
+                NotAcceptedServerSocket = new Socket(AddressFamily.InterNetwork,
                                     SocketType.Stream, ProtocolType.Tcp);
                 NotAcceptedServerSocket.Bind(listeningPoint);
                 NotAcceptedServerSocket.Listen(settings.ServerListeningQueue);
@@ -171,7 +171,6 @@ namespace BookHelperSolution
                         opnieuw();
                     }
                     else{
-                        listener = null;
                         Console.WriteLine("Client disconnected.");
                         Console.WriteLine("Waiting for new client...\n");
                         listener = NotAcceptedServerSocket.Accept();
