@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Text.Json;
-using System.Text.Encodings;
+using System.Text;
 using System.Net;
 using System.Net.Sockets;
 using System.IO;
@@ -91,14 +91,16 @@ namespace BookHelperSolution
         protected override void loadDataFromJson()
         {
             //todo: To meet the assignment requirement, implement this method 
-            // try
-            // {
+            try
+            {
+                string rawJson = File.ReadAllText(booksDataFile);
+                booksList = JsonSerializer.Deserialize<List<BookData>>(rawJson);
 
-            // }
-            // catch (Exception e)
-            // {
-
-            // }
+            }
+            catch (Exception e)
+            {
+                report("[Exception]", e.Message); 
+            }
         }
 
         /// <summary>
@@ -151,7 +153,7 @@ namespace BookHelperSolution
                 int b = listener.Receive(buffer);
                 string data = Encoding.ASCII.GetString(buffer, 0, b);
                 Message ClientRecieved = JsonSerializer.Deserialize<Message>(data);
-
+                
                 string jsonString = JsonSerializer.Serialize(processMessage(ClientRecieved));
                 byte[] msg = Encoding.ASCII.GetBytes(jsonString);
                 listener.Send(msg);
@@ -159,6 +161,7 @@ namespace BookHelperSolution
 
             catch (Exception e) {
                 Console.WriteLine("Something went wrong.");
+                Console.WriteLine(e);
             }
         
         }
@@ -178,15 +181,32 @@ namespace BookHelperSolution
         protected override Message processMessage(Message message)
         {
             Message reply = new Message();
+            bool bookFound = false
+            BookData bookInfo = new BookData;
+
             //todo: To meet the assignment requirement, finish the implementation of this method .
-            // try
-            // {
+            try
+            {
+                if (message.Type == MessageType.BookInquiry)
+                {
+                    foreach(var b in booksList)
+                    {
+                        if(b.Title == message.Content)
+                        {
+                            bookInfo = b;
+                            
+                            reply.Type = MessageType.BookInquiryReply;
+                            reply.Content = bookInfo;
+                        }
+                    }
+                    reply.Type = MessageType.NotFound;
+                }
 
-            // }
-            // catch (Exception e)
-            // {
+            }
+            catch (Exception e)
+            {
 
-            // }
+            }
             return reply;
         }
     }
