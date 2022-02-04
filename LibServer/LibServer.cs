@@ -86,6 +86,8 @@ namespace LibServerSolution
         IPEndPoint listeningPoint;
         Socket bookHelperSocket;
 
+        Socket notAcceptedserverSocket;
+
         public SequentialServer() : base()
         {
             GetConfigurationValue();
@@ -104,9 +106,8 @@ namespace LibServerSolution
             {
                 IPAddress iPAddress = IPAddress.Parse(settings.ServerIPAddress);
                 listeningPoint = new IPEndPoint(iPAddress, settings.ServerPortNumber);
-                Socket notAcceptedserverSocket = new Socket(AddressFamily.InterNetwork,
+                notAcceptedserverSocket = new Socket(AddressFamily.InterNetwork,
                                     SocketType.Stream, ProtocolType.Tcp);
-                notAcceptedserverSocket.SetSocketOption(SocketOptionLevel.Socket,SocketOptionName.ReuseAddress, true);
                 notAcceptedserverSocket.Bind(listeningPoint);
                 notAcceptedserverSocket.Listen(settings.ServerListeningQueue);
 
@@ -130,7 +131,6 @@ namespace LibServerSolution
                     }
                 }
                 serverSocket = notAcceptedserverSocket.Accept();
-                serverSocket.SetSocketOption(SocketOptionLevel.Socket,SocketOptionName.ReuseAddress, true);
             }
             catch
             {
@@ -170,23 +170,8 @@ namespace LibServerSolution
                         Console.WriteLine("Error in sending/receiving.");
                     }
                     else{
-                        Console.WriteLine("client disconnected");
-                        serverSocket.Shutdown(SocketShutdown.Both);
-                        serverSocket.Disconnect(true);
-                        serverSocket.Close();
-                        serverSocket.Dispose();
-                        IPAddress iPAddress = IPAddress.Parse(settings.ServerIPAddress);
-                        listeningPoint = new IPEndPoint(iPAddress, settings.ServerPortNumber);
-                        Socket notAcceptedserverSocket = new Socket(AddressFamily.InterNetwork,
-                                            SocketType.Stream, ProtocolType.Tcp);
-                        notAcceptedserverSocket.SetSocketOption(SocketOptionLevel.Socket,SocketOptionName.ReuseAddress, true);
-                        notAcceptedserverSocket.Bind(listeningPoint);
-                        notAcceptedserverSocket.Listen(settings.ServerListeningQueue);
-                        Console.WriteLine("waiting for accept");
                         serverSocket = null;
-                        serverSocket = notAcceptedserverSocket.Accept();
-                        Console.WriteLine("opnieuw");
-                        
+                        serverSocket = notAcceptedserverSocket.Accept();                        
                         newClient();
                     }
                 }
