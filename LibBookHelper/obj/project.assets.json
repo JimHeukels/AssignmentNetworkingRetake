@@ -451,26 +451,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Jim\\.nuget\\packages\\": {}
+    "C:\\Users\\patri\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\school2\\Jaar 2.2\\Analyse\\networking\\AssignmentNetworkingRetake\\LibBookHelper\\BookHelper.csproj",
+      "projectUniqueName": "C:\\Users\\patri\\Documents\\GitHub\\AssignmentNetworkingRetake\\LibBookHelper\\BookHelper.csproj",
       "projectName": "BookHelper",
-      "projectPath": "D:\\school2\\Jaar 2.2\\Analyse\\networking\\AssignmentNetworkingRetake\\LibBookHelper\\BookHelper.csproj",
-      "packagesPath": "C:\\Users\\Jim\\.nuget\\packages\\",
-      "outputPath": "D:\\school2\\Jaar 2.2\\Analyse\\networking\\AssignmentNetworkingRetake\\LibBookHelper\\obj\\",
+      "projectPath": "C:\\Users\\patri\\Documents\\GitHub\\AssignmentNetworkingRetake\\LibBookHelper\\BookHelper.csproj",
+      "packagesPath": "C:\\Users\\patri\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\patri\\Documents\\GitHub\\AssignmentNetworkingRetake\\LibBookHelper\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Jim\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\patri\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net5.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -517,7 +515,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.200\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.401\\RuntimeIdentifierGraph.json"
       }
     }
   }

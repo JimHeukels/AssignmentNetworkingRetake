@@ -1,27 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "D:\\school2\\Jaar 2.2\\Analyse\\networking\\AssignmentNetworkingRetake\\LibServer\\LibServer.csproj": {}
+    "C:\\Users\\patri\\Documents\\GitHub\\AssignmentNetworkingRetake\\LibServer\\LibServer.csproj": {}
   },
   "projects": {
-    "D:\\school2\\Jaar 2.2\\Analyse\\networking\\AssignmentNetworkingRetake\\LibServer\\LibServer.csproj": {
+    "C:\\Users\\patri\\Documents\\GitHub\\AssignmentNetworkingRetake\\LibServer\\LibServer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\school2\\Jaar 2.2\\Analyse\\networking\\AssignmentNetworkingRetake\\LibServer\\LibServer.csproj",
+        "projectUniqueName": "C:\\Users\\patri\\Documents\\GitHub\\AssignmentNetworkingRetake\\LibServer\\LibServer.csproj",
         "projectName": "LibServer",
-        "projectPath": "D:\\school2\\Jaar 2.2\\Analyse\\networking\\AssignmentNetworkingRetake\\LibServer\\LibServer.csproj",
-        "packagesPath": "C:\\Users\\Jim\\.nuget\\packages\\",
-        "outputPath": "D:\\school2\\Jaar 2.2\\Analyse\\networking\\AssignmentNetworkingRetake\\LibServer\\obj\\",
+        "projectPath": "C:\\Users\\patri\\Documents\\GitHub\\AssignmentNetworkingRetake\\LibServer\\LibServer.csproj",
+        "packagesPath": "C:\\Users\\patri\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\patri\\Documents\\GitHub\\AssignmentNetworkingRetake\\LibServer\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Jim\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\patri\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -68,7 +66,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.200\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.401\\RuntimeIdentifierGraph.json"
         }
       }
     }

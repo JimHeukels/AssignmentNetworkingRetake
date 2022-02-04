@@ -153,7 +153,9 @@ namespace LibServerSolution
                 {
                     byte[] buffer = new byte[1000];
                     void waitForReceive(){
+                        Console.WriteLine("server wait for receive");
                         int b = serverSocket.Receive(buffer);
+                        Console.WriteLine("server received");
                         string data = Encoding.ASCII.GetString(buffer, 0, b);
                         Message ClientRecieved = JsonSerializer.Deserialize<Message>(data);
 
@@ -224,10 +226,14 @@ namespace LibServerSolution
 
                 string jsonString = JsonSerializer.Serialize(messageToHelper);
                 byte[] msg = Encoding.ASCII.GetBytes(jsonString);
+                Console.WriteLine($"{messageToHelper.Content} before message send.");
                 bookHelperSocket.Send(msg);
+                Console.WriteLine($"{messageToHelper.Content}  message send.");
 
                 byte[] buffer = new byte[1000];
+                Console.WriteLine("before message receive.");
                 int b = bookHelperSocket.Receive(buffer);
+                Console.WriteLine(" message receive.");
                 string data = Encoding.ASCII.GetString(buffer, 0, b);
                 Message helperReceived = JsonSerializer.Deserialize<Message>(data);
                 HelperReply = helperReceived;

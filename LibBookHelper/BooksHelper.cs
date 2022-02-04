@@ -181,8 +181,8 @@ namespace BookHelperSolution
         protected override Message processMessage(Message message)
         {
             Message reply = new Message();
-            bool bookFound = false
-            BookData bookInfo = new BookData;
+            bool bookFound = false;
+            BookData bookInfo = new BookData();
 
             //todo: To meet the assignment requirement, finish the implementation of this method .
             try
@@ -194,16 +194,20 @@ namespace BookHelperSolution
                         if(b.Title == message.Content)
                         {
                             bookInfo = b;
-                            
+                            Console.WriteLine("Book found and in reply");
                             reply.Type = MessageType.BookInquiryReply;
-                            reply.Content = bookInfo;
+                            reply.Content = JsonSerializer.Serialize(bookInfo);
+                            bookFound = true;
                         }
                     }
-                    reply.Type = MessageType.NotFound;
+                    if (!bookFound){
+                        Console.WriteLine("book not found added");
+                        reply.Type = MessageType.NotFound;
+                    }
                 }
 
             }
-            catch (Exception e)
+            catch
             {
 
             }

@@ -178,6 +178,12 @@ namespace LibClient
                 jsonString = JsonSerializer.Serialize(processMessage(ClientRecieved));
                 msg = Encoding.ASCII.GetBytes(jsonString);
                 clientSocket.Send(msg);
+
+                buf = clientSocket.Receive(buffer);
+                data = Encoding.ASCII.GetString(buffer, 0, buf);
+                Message ClientRecieved = JsonSerializer.Deserialize<Message>(data);
+
+                jsonString = JsonSerializer.Serialize(processMessage(ClientRecieved));
                
             }
             catch 
@@ -202,10 +208,10 @@ namespace LibClient
             try
             {
                if (message.Type == MessageType.Welcome){
-                    processedMsgResult = new Message();
                     processedMsgResult.Type = MessageType.BookInquiry;
                     processedMsgResult.Content = bookName;
                }
+               else if (message.Type == MessageType.Welcome)
             }
             catch  
             {  
