@@ -171,7 +171,11 @@ namespace LibServerSolution
                     }
                     else{
                         serverSocket = null;
-                        serverSocket = notAcceptedserverSocket.Accept();                        
+                        Console.WriteLine("Client disconnected.");
+                        Console.WriteLine("Waiting for new client...\n");
+                        serverSocket = notAcceptedserverSocket.Accept();
+                        serverSocket = notAcceptedserverSocket.Accept();  
+                        Console.WriteLine("New client connected.");                  
                         newClient();
                     }
                 }
@@ -230,7 +234,7 @@ namespace LibServerSolution
                 
             }
             catch { 
-                Console.WriteLine("Error in sending message to helper.");
+                Console.WriteLine("Can't communicate with BooksHelper server.");
             }
 
             return HelperReply;

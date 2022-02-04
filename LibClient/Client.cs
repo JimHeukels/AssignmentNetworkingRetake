@@ -141,7 +141,7 @@ namespace LibClient
             }
             catch 
             {
-                Console.WriteLine("Error in setting up server");
+                Console.WriteLine("Error in creating client socket.");
             }
 
         }
@@ -182,7 +182,7 @@ namespace LibClient
             }
             catch 
             {  
-
+                Console.WriteLine("Error in sending/receiving from server.");
             }
 
             return this.result;
@@ -209,7 +209,7 @@ namespace LibClient
             }
             catch  
             {  
-
+                Console.WriteLine("Error in message processing.");
             }
 
             return processedMsgResult;
