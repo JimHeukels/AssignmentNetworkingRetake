@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text.Json;
+using System.Text;
 using System.Net;
 using System.Net.Sockets;
 using System.IO;
@@ -90,14 +91,16 @@ namespace BookHelperSolution
         protected override void loadDataFromJson()
         {
             //todo: To meet the assignment requirement, implement this method 
-            // try
-            // {
+            try
+            {
+                string rawJson = File.ReadAllText(booksDataFile);
+                booksList = JsonSerializer.Deserialize<List<BookData>>(rawJson);
 
-            // }
-            // catch (Exception e)
-            // {
-
-            // }
+            }
+            catch (Exception e)
+            {
+                report("[Exception]", e.Message); 
+            }
         }
 
         /// <summary>
@@ -144,7 +147,31 @@ namespace BookHelperSolution
             createSocket();
             //todo: To meet the assignment requirement, finish the implementation of this method 
 
+            try
+            {
+                byte[] buffer = new byte[1000];
+                int b = listener.Receive(buffer);
+                string data = Encoding.ASCII.GetString(buffer, 0, b);
+                Message ClientRecieved = JsonSerializer.Deserialize<Message>(data);
+                
+                string jsonString = JsonSerializer.Serialize(processMessage(ClientRecieved));
+                byte[] msg = Encoding.ASCII.GetBytes(jsonString);
+                listener.Send(msg);
+            }
+
+            catch (Exception e) {
+                Console.WriteLine("Something went wrong.");
+                Console.WriteLine(e);
+            }
+        
         }
+
+        //verschillende scenario's:
+        // 1: BookINquiry       -  message VAN server met                                               -- titel van het boek         
+        // 2: BookInquiryReply  -  message NAAR de server                                               -- Boek informatie uit de jason
+        // 3: NotFound          -  reactie message NAAR de server wanneer een boek niet gevonden is.    -- boek titel
+        // 4: Error             -  reactie van zowel bookhelper als server                              -- info afhankelijk van de opgelopen error
+
 
         /// <summary>
         /// Given the message received from the Server, this method processes the message and returns a reply.
@@ -154,15 +181,32 @@ namespace BookHelperSolution
         protected override Message processMessage(Message message)
         {
             Message reply = new Message();
+            bool bookFound = false
+            BookData bookInfo = new BookData;
+
             //todo: To meet the assignment requirement, finish the implementation of this method .
-            // try
-            // {
+            try
+            {
+                if (message.Type == MessageType.BookInquiry)
+                {
+                    foreach(var b in booksList)
+                    {
+                        if(b.Title == message.Content)
+                        {
+                            bookInfo = b;
+                            
+                            reply.Type = MessageType.BookInquiryReply;
+                            reply.Content = bookInfo;
+                        }
+                    }
+                    reply.Type = MessageType.NotFound;
+                }
 
-            // }
-            // catch (Exception e)
-            // {
+            }
+            catch (Exception e)
+            {
 
-            // }
+            }
             return reply;
         }
     }

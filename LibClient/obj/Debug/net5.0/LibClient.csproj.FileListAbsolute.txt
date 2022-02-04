@@ -26,3 +26,31 @@ C:\Users\patri\Documents\GitHub\AssignmentNetworkingRetake\LibClient\obj\Debug\n
 C:\Users\patri\Documents\GitHub\AssignmentNetworkingRetake\LibClient\obj\Debug\net5.0\ref\LibClient.dll
 C:\Users\patri\Documents\GitHub\AssignmentNetworkingRetake\LibClient\obj\Debug\net5.0\LibClient.pdb
 C:\Users\patri\Documents\GitHub\AssignmentNetworkingRetake\LibClient\obj\Debug\net5.0\LibClient.genruntimeconfig.cache
+D:\school2\Jaar 2.2\Analyse\networking\AssignmentNetworkingRetake\LibClient\bin\Debug\net5.0\LibClient.exe
+D:\school2\Jaar 2.2\Analyse\networking\AssignmentNetworkingRetake\LibClient\bin\Debug\net5.0\LibClient.deps.json
+D:\school2\Jaar 2.2\Analyse\networking\AssignmentNetworkingRetake\LibClient\bin\Debug\net5.0\LibClient.runtimeconfig.json
+D:\school2\Jaar 2.2\Analyse\networking\AssignmentNetworkingRetake\LibClient\bin\Debug\net5.0\LibClient.runtimeconfig.dev.json
+D:\school2\Jaar 2.2\Analyse\networking\AssignmentNetworkingRetake\LibClient\bin\Debug\net5.0\LibClient.dll
+D:\school2\Jaar 2.2\Analyse\networking\AssignmentNetworkingRetake\LibClient\bin\Debug\net5.0\ref\LibClient.dll
+D:\school2\Jaar 2.2\Analyse\networking\AssignmentNetworkingRetake\LibClient\bin\Debug\net5.0\LibClient.pdb
+D:\school2\Jaar 2.2\Analyse\networking\AssignmentNetworkingRetake\LibClient\bin\Debug\net5.0\Microsoft.Extensions.Configuration.dll
+D:\school2\Jaar 2.2\Analyse\networking\AssignmentNetworkingRetake\LibClient\bin\Debug\net5.0\Microsoft.Extensions.Configuration.Abstractions.dll
+D:\school2\Jaar 2.2\Analyse\networking\AssignmentNetworkingRetake\LibClient\bin\Debug\net5.0\Microsoft.Extensions.Configuration.FileExtensions.dll
+D:\school2\Jaar 2.2\Analyse\networking\AssignmentNetworkingRetake\LibClient\bin\Debug\net5.0\Microsoft.Extensions.Configuration.Json.dll
+D:\school2\Jaar 2.2\Analyse\networking\AssignmentNetworkingRetake\LibClient\bin\Debug\net5.0\Microsoft.Extensions.FileProviders.Abstractions.dll
+D:\school2\Jaar 2.2\Analyse\networking\AssignmentNetworkingRetake\LibClient\bin\Debug\net5.0\Microsoft.Extensions.FileProviders.Physical.dll
+D:\school2\Jaar 2.2\Analyse\networking\AssignmentNetworkingRetake\LibClient\bin\Debug\net5.0\Microsoft.Extensions.FileSystemGlobbing.dll
+D:\school2\Jaar 2.2\Analyse\networking\AssignmentNetworkingRetake\LibClient\bin\Debug\net5.0\Microsoft.Extensions.Primitives.dll
+D:\school2\Jaar 2.2\Analyse\networking\AssignmentNetworkingRetake\LibClient\bin\Debug\net5.0\System.Runtime.CompilerServices.Unsafe.dll
+D:\school2\Jaar 2.2\Analyse\networking\AssignmentNetworkingRetake\LibClient\bin\Debug\net5.0\System.Text.Encodings.Web.dll
+D:\school2\Jaar 2.2\Analyse\networking\AssignmentNetworkingRetake\LibClient\bin\Debug\net5.0\System.Text.Json.dll
+D:\school2\Jaar 2.2\Analyse\networking\AssignmentNetworkingRetake\LibClient\obj\Debug\net5.0\LibClient.csprojAssemblyReference.cache
+D:\school2\Jaar 2.2\Analyse\networking\AssignmentNetworkingRetake\LibClient\obj\Debug\net5.0\LibClient.GeneratedMSBuildEditorConfig.editorconfig
+D:\school2\Jaar 2.2\Analyse\networking\AssignmentNetworkingRetake\LibClient\obj\Debug\net5.0\LibClient.AssemblyInfoInputs.cache
+D:\school2\Jaar 2.2\Analyse\networking\AssignmentNetworkingRetake\LibClient\obj\Debug\net5.0\LibClient.AssemblyInfo.cs
+D:\school2\Jaar 2.2\Analyse\networking\AssignmentNetworkingRetake\LibClient\obj\Debug\net5.0\LibClient.csproj.CoreCompileInputs.cache
+D:\school2\Jaar 2.2\Analyse\networking\AssignmentNetworkingRetake\LibClient\obj\Debug\net5.0\LibClient.csproj.CopyComplete
+D:\school2\Jaar 2.2\Analyse\networking\AssignmentNetworkingRetake\LibClient\obj\Debug\net5.0\LibClient.dll
+D:\school2\Jaar 2.2\Analyse\networking\AssignmentNetworkingRetake\LibClient\obj\Debug\net5.0\ref\LibClient.dll
+D:\school2\Jaar 2.2\Analyse\networking\AssignmentNetworkingRetake\LibClient\obj\Debug\net5.0\LibClient.pdb
+D:\school2\Jaar 2.2\Analyse\networking\AssignmentNetworkingRetake\LibClient\obj\Debug\net5.0\LibClient.genruntimeconfig.cache
