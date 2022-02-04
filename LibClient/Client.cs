@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading;
 // using LibData;
 using Microsoft.Extensions.Configuration;
+//Names: Patrick Spekman 0999390, Jim Heukels 0890829
 
 namespace LibClient
 {
