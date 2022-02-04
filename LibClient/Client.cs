@@ -137,11 +137,13 @@ namespace LibClient
                 serverEndPoint = new IPEndPoint(ipAddress, settings.ServerPortNumber);
                 clientSocket = new Socket(AddressFamily.InterNetwork,
                                      SocketType.Stream, ProtocolType.Tcp);
+                Console.WriteLine("Client tries to connect.");
                 clientSocket.Connect(serverEndPoint);
+                Console.WriteLine("Client connected.");
             }
             catch 
             {
-                Console.WriteLine("Error in creating client socket.");
+                Console.WriteLine("Error connecting to server.");
             }
 
         }
@@ -163,32 +165,58 @@ namespace LibClient
                 byte[] buffer = new byte[maxBuffSize];
                 byte[] msg = new byte[maxBuffSize];
 
+                // Hello message
+                Thread.Sleep(700);
                 Message helloMessage = new Message();
                 helloMessage.Type = MessageType.Hello;
                 helloMessage.Content = client_id;
                 string jsonString = JsonSerializer.Serialize(helloMessage);
-
                 msg = Encoding.ASCII.GetBytes(jsonString);
+                Console.WriteLine("hello send before.");
                 clientSocket.Send(msg);
+                Console.WriteLine("hello send.");
+                // Hello send
 
+                // Welcome received
                 int buf = clientSocket.Receive(buffer);
+                Console.WriteLine("welcome received.");
                 string data = Encoding.ASCII.GetString(buffer, 0, buf);
                 Message ClientRecieved = JsonSerializer.Deserialize<Message>(data);
-                
                 jsonString = JsonSerializer.Serialize(processMessage(ClientRecieved));
                 msg = Encoding.ASCII.GetBytes(jsonString);
                 clientSocket.Send(msg);
+                Console.WriteLine("bookinquiry send.");
+                // Bookinquiry send
 
+                // BookdataReply/NotFound received
                 buf = clientSocket.Receive(buffer);
+                Console.WriteLine("bookreply received.");
                 data = Encoding.ASCII.GetString(buffer, 0, buf);
-                Message ClientRecieved = JsonSerializer.Deserialize<Message>(data);
+                ClientRecieved = JsonSerializer.Deserialize<Message>(data);
 
-                jsonString = JsonSerializer.Serialize(processMessage(ClientRecieved));
+                Message bookreply = processMessage(ClientRecieved);
+                BookData b = JsonSerializer.Deserialize<BookData>(bookreply.Content);
+                bool error = bookreply.Type == MessageType.Error;
+
+                result.Client_id = client_id;
+                result.BookName = b.Title;
+                result.Status = b.Status;
+                result.Error = error.ToString();
+                result.BorrowerName = b.BorrowedBy;
+                result.ReturnDate = b.ReturnDate;
+                clientSocket.Close();
                
             }
             catch 
             {  
                 Console.WriteLine("Error in sending/receiving from server.");
+                result.Client_id = client_id;
+                result.BookName = bookName;
+                result.Status = null;
+                result.Error = "true";
+                result.BorrowerName = null;
+                result.ReturnDate = null;
+                clientSocket.Close();
             }
 
             return this.result;
@@ -211,7 +239,12 @@ namespace LibClient
                     processedMsgResult.Type = MessageType.BookInquiry;
                     processedMsgResult.Content = bookName;
                }
-               else if (message.Type == MessageType.Welcome)
+               else if (message.Type == MessageType.BookInquiryReply){
+                   processedMsgResult = message;
+               }
+               else if (message.Type == MessageType.Error){
+                   processedMsgResult = message;
+               }
             }
             catch  
             {  

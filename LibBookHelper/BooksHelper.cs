@@ -75,6 +75,7 @@ namespace BookHelperSolution
         public Socket listener;
         public IPEndPoint listeningPoint;
         public IPAddress ipAddress;
+        public Socket NotAcceptedServerSocket;
         public List<BookData> booksList;
 
 
@@ -146,24 +147,40 @@ namespace BookHelperSolution
         {
             createSocket();
             //todo: To meet the assignment requirement, finish the implementation of this method 
+            void opnieuw(){
+                try
+                {
+                    void waitForReceive(){
+                        byte[] buffer = new byte[1000];
+                        int b = listener.Receive(buffer);
+                        string data = Encoding.ASCII.GetString(buffer, 0, b);
+                        Message ClientRecieved = JsonSerializer.Deserialize<Message>(data);
+                        
+                        string jsonString = JsonSerializer.Serialize(processMessage(ClientRecieved));
+                        byte[] msg = Encoding.ASCII.GetBytes(jsonString);
+                        listener.Send(msg);
+                        waitForReceive();
+                    }
+                    waitForReceive();
+                }
 
-            try
-            {
-                byte[] buffer = new byte[1000];
-                int b = listener.Receive(buffer);
-                string data = Encoding.ASCII.GetString(buffer, 0, b);
-                Message ClientRecieved = JsonSerializer.Deserialize<Message>(data);
-                
-                string jsonString = JsonSerializer.Serialize(processMessage(ClientRecieved));
-                byte[] msg = Encoding.ASCII.GetBytes(jsonString);
-                listener.Send(msg);
+                catch {
+                    if (listener.Connected){
+                        Console.WriteLine("Error in sending/receiving.");
+                        listener = NotAcceptedServerSocket.Accept();
+                        opnieuw();
+                    }
+                    else{
+                        listener = null;
+                        Console.WriteLine("Client disconnected.");
+                        Console.WriteLine("Waiting for new client...\n");
+                        listener = NotAcceptedServerSocket.Accept();
+                        Console.WriteLine("New client connected.");                  
+                        opnieuw();
+                    }
+                }
             }
-
-            catch (Exception e) {
-                Console.WriteLine("Something went wrong.");
-                Console.WriteLine(e);
-            }
-        
+            opnieuw();
         }
 
         //verschillende scenario's:

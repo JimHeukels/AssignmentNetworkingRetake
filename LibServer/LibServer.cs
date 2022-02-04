@@ -170,13 +170,14 @@ namespace LibServerSolution
                 catch {
                     if (serverSocket.Connected){
                         Console.WriteLine("Error in sending/receiving.");
+                        serverSocket = notAcceptedserverSocket.Accept();
+                        newClient();
                     }
                     else{
                         serverSocket = null;
                         Console.WriteLine("Client disconnected.");
                         Console.WriteLine("Waiting for new client...\n");
                         serverSocket = notAcceptedserverSocket.Accept();
-                        serverSocket = notAcceptedserverSocket.Accept();  
                         Console.WriteLine("New client connected.");                  
                         newClient();
                     }
