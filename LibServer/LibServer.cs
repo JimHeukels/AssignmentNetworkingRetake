@@ -129,6 +129,7 @@ namespace LibServerSolution
                         }
                         catch{}
                     }
+                    Console.WriteLine("Unable to connect to BookHelper.");
                 }
                 serverSocket = notAcceptedserverSocket.Accept();
             }
@@ -153,34 +154,28 @@ namespace LibServerSolution
                 {
                     byte[] buffer = new byte[1000];
                     void waitForReceive(){
-                        Console.WriteLine("server wait for receive");
+                        Console.WriteLine("Waiting for messages from client...");
                         int b = serverSocket.Receive(buffer);
-                        Console.WriteLine("server received");
+                        Console.WriteLine("Message received from client.");
                         string data = Encoding.ASCII.GetString(buffer, 0, b);
                         Message ClientRecieved = JsonSerializer.Deserialize<Message>(data);
 
                         string jsonString = JsonSerializer.Serialize(processMessage(ClientRecieved));
                         byte[] msg = Encoding.ASCII.GetBytes(jsonString);
                         serverSocket.Send(msg);
+                        Console.WriteLine("Message send to client.");
                         waitForReceive();
                     }
                     waitForReceive();
                 }
 
                 catch {
-                    if (serverSocket.Connected){
-                        Console.WriteLine("Error in sending/receiving.");
-                        serverSocket = notAcceptedserverSocket.Accept();
-                        newClient();
-                    }
-                    else{
-                        serverSocket = null;
-                        Console.WriteLine("Client disconnected.");
-                        Console.WriteLine("Waiting for new client...\n");
-                        serverSocket = notAcceptedserverSocket.Accept();
-                        Console.WriteLine("New client connected.");                  
-                        newClient();
-                    }
+                    serverSocket = null;
+                    Console.WriteLine("Client disconnected.");
+                    Console.WriteLine("Waiting for new client...\n");
+                    serverSocket = notAcceptedserverSocket.Accept();
+                    Console.WriteLine("New client connected.");                  
+                    newClient();
                 }
             }
             newClient();
@@ -227,14 +222,12 @@ namespace LibServerSolution
 
                 string jsonString = JsonSerializer.Serialize(messageToHelper);
                 byte[] msg = Encoding.ASCII.GetBytes(jsonString);
-                Console.WriteLine($"{messageToHelper.Content} before message send.");
                 bookHelperSocket.Send(msg);
-                Console.WriteLine($"{messageToHelper.Content}  message send.");
+                Console.WriteLine($"Message with content: {messageToHelper.Content} send to BookHelper.");
 
                 byte[] buffer = new byte[1000];
-                Console.WriteLine("before message receive.");
                 int b = bookHelperSocket.Receive(buffer);
-                Console.WriteLine(" message receive.");
+                Console.WriteLine("BookReply received from BookHelper.");
                 string data = Encoding.ASCII.GetString(buffer, 0, b);
                 Message helperReceived = JsonSerializer.Deserialize<Message>(data);
                 HelperReply = helperReceived;

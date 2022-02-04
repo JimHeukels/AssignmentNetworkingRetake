@@ -172,7 +172,6 @@ namespace LibClient
                 helloMessage.Content = client_id;
                 string jsonString = JsonSerializer.Serialize(helloMessage);
                 msg = Encoding.ASCII.GetBytes(jsonString);
-                Console.WriteLine("hello send before.");
                 clientSocket.Send(msg);
                 Console.WriteLine("hello send.");
                 // Hello send

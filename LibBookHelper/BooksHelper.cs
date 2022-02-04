@@ -182,13 +182,6 @@ namespace BookHelperSolution
             opnieuw();
         }
 
-        //verschillende scenario's:
-        // 1: BookINquiry       -  message VAN server met                                               -- titel van het boek         
-        // 2: BookInquiryReply  -  message NAAR de server                                               -- Boek informatie uit de jason
-        // 3: NotFound          -  reactie message NAAR de server wanneer een boek niet gevonden is.    -- boek titel
-        // 4: Error             -  reactie van zowel bookhelper als server                              -- info afhankelijk van de opgelopen error
-
-
         /// <summary>
         /// Given the message received from the Server, this method processes the message and returns a reply.
         /// </summary>
@@ -210,14 +203,14 @@ namespace BookHelperSolution
                         if(b.Title == message.Content)
                         {
                             bookInfo = b;
-                            Console.WriteLine("Book found and in reply");
+                            Console.WriteLine("Book found");
                             reply.Type = MessageType.BookInquiryReply;
                             reply.Content = JsonSerializer.Serialize(bookInfo);
                             bookFound = true;
                         }
                     }
                     if (!bookFound){
-                        Console.WriteLine("book not found added");
+                        Console.WriteLine("book not found");
                         reply.Type = MessageType.NotFound;
                     }
                 }
